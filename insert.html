@@ -1,0 +1,162 @@
+<html lang="en">
+   <head>
+      <title>Recipe Form</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"  />
+      <script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.6.0/stitch.js"></script>
+      <script src="./js/login.js"></script>
+      <script src="./js/insert.js"></script>
+      <script>
+         window.onload = function() {
+          loadInsertOrReplace()
+         }
+      </script>
+   </head>
+   <style type="text/css">
+      .btn {
+      background-color: DodgerBlue; /* Blue background */
+      border: none; /* Remove borders */
+      color: white; /* White text */
+      padding: 12px 16px; /* Some padding */
+      font-size: 16px; /* Set a font size */
+      cursor: pointer; /* Mouse pointer on hover */
+      }
+      /* Darker background on mouse-over */
+      .btn:hover {
+      background-color: RoyalBlue;
+      }
+   </style>
+   <body>
+      <div class="container">
+         <h2> Insert a New Recipe Item </h2>
+         <form class="form-horizontal">
+            <div class="form-group">
+               <label class="control-label col-sm-2">Recipe Name:</label>
+               <div class="col-sm-8">
+                  <input type="text" class="form-control" id="name" placeholder="Grilled Brussel Sprouts with...">
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="control-label col-sm-2"> Servings: </label>
+               <div class="col-sm-2">
+                  <select id="servings" class="form-control">
+                     <option value="1">1</option>
+                     <option value="2">2</option>
+                     <option value="3">3</option>
+                     <option value="4">4</option>
+                     <option value="5">5</option>
+                     <option value="6">6</option>
+                     <option value="7">7</option>
+                     <option value="8">8</option>
+                     <option value="9">9</option>
+                     <option value="10">10</option>
+                     <option value="11">11</option>
+                     <option value="12">12</option>
+                     <option value="13">13</option>
+                     <option value="14">14</option>
+                     <option value="15">15</option>
+                  </select>
+               </div>
+               <label class="control-label col-sm-1"> Rating: </label>
+               <div class="col-sm-2">
+                  <select id="rating" class="form-control">
+                     <option value="1">1</option>
+                     <option value="2">2</option>
+                     <option value="3">3</option>
+                     <option value="4">4</option>
+                     <option value="5">5</option>
+                  </select>
+               </div>
+               <label class="control-label col-sm-1"> Difficulty: </label>
+               <div class="col-sm-2">
+                  <select id="difficulty" class="form-control">
+                     <option value="1">1</option>
+                     <option value="2">2</option>
+                     <option value="3">3</option>
+                     <option value="4">4</option>
+                     <option value="5">5</option>
+                  </select>
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="control-label col-sm-2">Time Required:</label>
+               <div class="col-sm-4">          
+                  <input type="number" class="form-control" id="timeReq" placeholder="45">
+               </div>
+               <div class="col-sm-4">
+                  <select id="timeUnit" class="form-control">
+                     <option value="minutes">minutes</option>
+                     <option value="hours">hours</option>
+                  </select>
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="control-label col-sm-2">Tags: </label>
+               <input type="radio" id="isMeat" value="meat"> <label>Meat</label>
+               &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="isChicken" value="chicken"> <label>Chicken</label>
+               &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="isFish" value="fish"> <label>Fish</label>
+               &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="isApp" value="app"> <label>Apps</label>
+               &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="isSide" value="side"> <label>Side</label>
+               &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="isDessert" value="dessert"> <label>Dessert</label>
+               &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="isSoup" value="soup"> <label>Soup</label>
+               &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="isSalad" value="salad"> <label>Salad</label>
+               &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="isPasta" value="pasta"> <label>Pasta</label>
+               &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="isBrunch" value="brunch"> <label>Brunch</label>
+            </div>
+            <div class="form-group">
+               <label class="control-label col-sm-2">Image Name:</label>
+               <div class="col-sm-8">
+                  <input type="text" class="form-control" id="image" placeholder="sprouts.jpg">
+               </div>
+            </div>
+            </br>
+            <div id="ingredientList">
+               <div class="form-group">
+                  <label class="control-label col-sm-2">Ingredients:</label>
+                  <div class="col-sm-2">          
+                     <input type="number" class="form-control" id="ingredientQuantity1" placeholder="2">
+                  </div>
+                  <div class="col-sm-2">    
+                     <input type="text" class="form-control" id="ingredientUnit1" placeholder="tablespoons">    
+                  </div>
+                  <div class="col-sm-4">    
+                     <input type="text" class="form-control" id="ingredient1" placeholder="kosher salt">    
+                  </div>
+               </div>
+               <div class="form-group" id="ingredientAddButton">
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-1">
+                     <button class="btn form-control" type="button" onclick="insertIngredient()"><i class="fa fa-plus"></i></button>
+                  </div>
+                  <div class="col-sm-8"></div>
+               </div>
+            </div>
+            </br>
+            <div id="instructionList">
+               <div class="form-group">
+                  <label class="control-label col-sm-2">Instructions:</label>
+                  <div class="col-sm-8">          
+                     <input type="text" class="form-control" id="instruction1" placeholder="Mince the garlic and put it in the pot with olive oil">
+                  </div>
+               </div>
+               <div class="form-group" id="instructionAddButton">
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-1">
+                     <button class="btn form-control" type="button" onclick="insertInstruction()"><i class="fa fa-plus"></i></button>
+                  </div>
+                  <div class="col-sm-8"></div>
+               </div>
+            </div>
+            <div class="form-group">
+               <div class="col-sm-offset-2 col-sm-10">
+                  <button type="button" class="btn btn-default" onclick="insertOrReplaceRecipe()">Submit</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </body>
+</html>
