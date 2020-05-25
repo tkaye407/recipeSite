@@ -40,6 +40,12 @@
           getRecipe()
          }
       </script>
+      <style type="text/css" media="print">
+          .NonPrintable
+          {
+            display: none;
+          }
+        </style>
    </head>
    <body>
       <!-- Splash Screen
@@ -47,7 +53,7 @@
       <div id="splash"></div>
       <!-- Website Logo
          ================= -->
-      <section id="logo">
+      <section id="logo" class="NonPrintable">
          <a href="./index.html">
             <div class="container text-center wow pulse">
                <img src="images/logo-white.svg" alt="logo" />
@@ -68,11 +74,11 @@
             <div class="row vertical-align">
                <div class="col-12">
                   <!-- Picture -->
-                  <div class="col-md-8 pull-left wow swing">
+                  <div class="col-md-7 pull-left wow swing">
                      <img id="recipeImage" src="" alt="finding" class="recipe-picture" />
                   </div>
                   <!-- Info -->
-                  <div class="col-md-4 pull-right wow lightSpeedIn">
+                  <div class="col-md-5 pull-right wow lightSpeedIn">
                      <div class="recipe-info">
                         <h3>Info</h3>
                         <!-- Author -->
@@ -159,7 +165,7 @@
 
 
 
-            <div class="row wow slideInUp">
+            <div class="row wow slideInUp NonPrintable">
                <div class="col-12">
                   <div class="recipe-comments">
                      <h3>Comments</h3>
@@ -173,7 +179,7 @@
                </div>
             </div>
 
-            <div class="row wow slideInUp">
+            <div class="row wow slideInUp NonPrintable">
                <div class="col-12">
                   <div class="recipe-comments">
                      <h3>Add New Comment</h3>
@@ -211,7 +217,7 @@
 
 
             <!-- Back to recipes -->
-            <div class="row wow rollIn">
+            <div class="row wow rollIn NonPrintable">
                <div class="col-12 text-center">
                   <a href="index.html">
                      comments
@@ -224,7 +230,7 @@
       </section>
       <!-- Website Footer
          =================== -->
-      <footer>
+      <footer class="NonPrintable">
          <div class="container">
             <div class="row">
                <!-- About -->
