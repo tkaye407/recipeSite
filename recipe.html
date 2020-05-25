@@ -156,10 +156,65 @@
                   </div>
                </div>
             </div>
+
+
+
+            <div class="row wow slideInUp">
+               <div class="col-12">
+                  <div class="recipe-comments">
+                     <h3>Comments</h3>
+
+                     <div class="col-12">
+                        <ul class="recipe-comments" list-style="square", id="recipeCommentsList">
+                        
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="row wow slideInUp">
+               <div class="col-12">
+                  <div class="recipe-comments">
+                     <h3>Add New Comment</h3>
+                     </br>
+                     <div class="col-12">
+                        <form action="#" method="post">
+                         <div class="row">
+                            <div class="col-2">
+                               Name:
+                            </div>
+                            <div class="col-10">
+                               <input type="text" align="center" size="40" id="newCommentName" placeholder="Charles Edward Cheese">
+                            </div>
+                         </div>
+                         </br>
+                         <div class="row">
+                            <div class="col-2"> Comment: </div>
+                            <div class="col-10">
+                               <textarea id="newCommentText" placeholder="Write your comment here" style="width:90%" name="comment"></textarea>
+                            </div>
+                         </div>
+                         
+                            
+                            <div>'
+                                 <button type="button" class="btn btn-default" style="width:100px;background:#a44c9f;color:#f9f9f9;display:block" onclick="insertComment()">Submit</button>
+                            </div>
+                        </form>
+                     </div>
+
+                     <ol id="recipeComments">
+                     </ol>
+                  </div>
+               </div>
+            </div>
+
+
             <!-- Back to recipes -->
             <div class="row wow rollIn">
                <div class="col-12 text-center">
                   <a href="index.html">
+                     comments
                   <i class="fa fa-backward" aria-hidden="true"></i>
                   Go to back to recipes.
                   </a>

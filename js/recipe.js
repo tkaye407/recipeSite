@@ -89,11 +89,72 @@ function getRecipe() {
 
                     recipeDirectionsList.appendChild(newInstruction)
                 }
+
+                var recipeCommentsList = document.getElementById("recipeCommentsList")
+                for (const comment of recipe.comments) {
+                    var commentLI = document.createElement("LI")
+                    var commentDiv = document.createElement("DIV")
+                    var commentUser = document.createElement("H5")
+                    var commentDate = document.createElement("SPAN")
+                    var commentText = document.createElement("P")
+
+                    console.log(comment)
+                    commentDiv.setAttribute("class",  "info")
+                    commentUser.innerText = comment.name
+                    commentText.innerText = comment.comment
+
+                    commentDate.setAttribute("style", "float:right")
+                    commentDate.innerText = `${comment.date.toLocaleString('default', { month: 'long', year: 'numeric'})}`
+
+                    commentDiv.appendChild(commentUser)
+                    commentDiv.appendChild(commentDate)
+
+                    commentLI.appendChild(commentDiv)
+                    commentLI.appendChild(commentText)
+
+                    recipeCommentsList.appendChild(commentLI)
+                }
             }).catch(err => {
                 console.log("Error getting recipes: ", err)
             })
         })
     })
+}
+
+function insertComment() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const idParam = urlParams.get('id');
+
+    const appID = "recipebook-dmxhi"
+    const stitchClient = stitch.Stitch.getAppClient(appID)
+
+    console.log(stitchClient.auth.user.id)
+
+    const filterDoc = {
+        _id: new stitch.BSON.ObjectId(idParam)
+    };
+
+    newCommentName = document.getElementById("newCommentName")
+    newCommentText = document.getElementById("newCommentText")
+
+    if (newCommentText && newCommentName) {
+        loginAnon(function(recipesColl, isAdmin) {
+            recipesColl.updateOne(filterDoc, {$push: {
+                comments: {
+                    user_id: stitchClient.auth.user.id, 
+                    name: newCommentName.value, 
+                    comment: newCommentText.value, 
+                    date: new Date(),
+                }
+            }}).then(result => {
+                alert("inserted comment!")
+                onServingsSelect()
+            }).catch(err => {
+                console.log(err)
+                alert("error inserting comment")
+            })
+        })
+    }
 }
 
 function onServingsSelect() {

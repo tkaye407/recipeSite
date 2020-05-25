@@ -7,15 +7,25 @@ const recipes_options = {
     }
 }
 
+function searchRecipes() {
+    if(event.keyCode == 13) {
+       const input = document.getElementById("recipeSearch")
+       window.location.href=`./index.html?searchStr=${encodeURIComponent(input.value)}`
+    }
+}
+
 function getRecipes() {
     const urlParams = new URLSearchParams(window.location.search);
     const tagParam = urlParams.get('tag');
-    console.log(tagParam)
+    const searchStrParam = urlParams.get('searchStr');
 
     var filterDoc = {}
     if (tagParam) {
         filterDoc["tags"] = tagParam
+    } else if (searchStrParam) {
+        filterDoc["title"] = new stitch.BSON.BSONRegExp(searchStrParam, 'i')
     }
+
     console.log(filterDoc)
 
     var recipesList = document.getElementById("recipesList")

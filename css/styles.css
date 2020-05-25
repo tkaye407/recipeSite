@@ -307,6 +307,64 @@ table {
     border-left-color: #a44c9f;
 }
 
+
+
+.recipe-comments ol {
+    counter-reset: li;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 4em;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+.recipe-comments ol ol {
+    margin: 0 0 0 2em;
+}
+.recipe-comments li {
+    position: relative;
+    display: block;
+    padding: .4em .4em .4em .8em;
+    *padding: .4em;
+    margin: .5em 0 .5em 2.5em;
+    background: #f9f9f9;
+    color: #222;
+    text-decoration: none;
+    transition: all .3s ease-out;
+    -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.15);
+    -moz-box-shadow: 0 1px 0 rgba(0,0,0,.15);
+    box-shadow: 0 1px 0 rgba(0,0,0,.15);
+}
+.recipe-comments li:hover{
+    background: #f1f1f1;
+}
+/*.recipe-comments li:before{
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    left: -2.5em;
+    top: 50%;
+    margin-top: -1em;
+    background: #a44c9f;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    text-align: center;
+    font-weight: bold;
+    color: #f9f9f9;
+}*/
+.recipe-comments li:after{
+    position: absolute;
+    content: '';
+    border: .5em solid transparent;
+    left: -1em;
+    top: 50%;
+    margin-top: -.5em;
+    transition: all .3s ease-out;
+}
+.recipe-comments li:hover:after{
+    left: -.5em;
+    border-left-color: #a44c9f;
+}
+
 /*
 ** Website Footer
 ** -----------------------------------------------------------------------------
