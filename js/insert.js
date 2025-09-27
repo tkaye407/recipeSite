@@ -3,11 +3,11 @@ function loadInsertOrReplace() {
     const idParam = urlParams.get('id');
 
     if (!idParam) {
-        return 
+        return
     }
 
     const filterDoc = {
-       _id: new stitch.BSON.ObjectId(idParam)
+        _id: new stitch.BSON.ObjectId(idParam)
     };
 
     const baseImageName = "https://sjkrecipesite.s3.amazonaws.com/"
@@ -45,7 +45,7 @@ function loadInsertOrReplace() {
 
             var imageName = document.getElementById("image")
             if (recipe.image.indexOf(baseImageName) === 0) {
-                imageName.value = recipe.image.slice(baseImageName.length) 
+                imageName.value = recipe.image.slice(baseImageName.length)
             }
 
             // Create all ingredient fields 
@@ -158,21 +158,25 @@ function insertOrReplaceRecipe() {
     const idParam = urlParams.get('id');
 
     if (!idParam) {
-      loginAnon(function(recipesColl) {
-          recipesColl.insertOne(newRecipe).then(result => {
-              alert("Successfully inserted new recipe: ", result)
-              window.location.href = './insert.html'
-          }).catch(err => {
-              alert("Error inserting new recipe: ", err)
-          })
-      })   
+        loginAnon(function(recipesColl) {
+            recipesColl.insertOne(newRecipe).then(result => {
+                alert("Successfully inserted new recipe: ", result)
+                window.location.href = './insert.html'
+            }).catch(err => {
+                alert("Error inserting new recipe: ", err)
+            })
+        })
     } else {
         const filterDoc = {
-           _id: new stitch.BSON.ObjectId(idParam)
+            _id: new stitch.BSON.ObjectId(idParam)
         };
 
         loginAnon(function(recipesColl) {
-            recipesColl.updateOne(filterDoc, {$set: newRecipe}, {upsert: true}).then(result => {
+            recipesColl.updateOne(filterDoc, {
+                $set: newRecipe
+            }, {
+                upsert: true
+            }).then(result => {
                 alert("Successfully replaced new recipe: ", result)
                 window.location.href = `./recipe.html?id=${idParam}`
             }).catch(err => {

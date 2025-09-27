@@ -8,9 +8,9 @@ const recipes_options = {
 }
 
 function searchRecipes() {
-    if(event.keyCode == 13) {
-       const input = document.getElementById("recipeSearch")
-       window.location.href=`./index.html?searchStr=${encodeURIComponent(input.value)}`
+    if (event.keyCode == 13) {
+        const input = document.getElementById("recipeSearch")
+        window.location.href = `./index.html?searchStr=${encodeURIComponent(input.value)}`
     }
 }
 
@@ -34,15 +34,15 @@ function getRecipes() {
             for (recipe of recipes) {
 
                 /*
-                	<div class="col-lg-4 col-md-6 col-sm-12 wow fadeIn">
-                	  <div class="recipe-item text-center">
-                	    <a href="recipe.html">
-                	      <img src="images/bbq-pork-ribs.jpg" alt="bbq-pork-ribs" />
-                	    </a>
-                	    <br />
-                	    <h3>Barbecue Pork Ribs</h3>
-                	  </div>
-                	</div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 wow fadeIn">
+                      <div class="recipe-item text-center">
+                        <a href="recipe.html">
+                          <img src="images/bbq-pork-ribs.jpg" alt="bbq-pork-ribs" />
+                        </a>
+                        <br />
+                        <h3>Barbecue Pork Ribs</h3>
+                      </div>
+                    </div>
                 */
 
                 console.log(recipe._id)
@@ -61,7 +61,7 @@ function getRecipes() {
                 if (recipe.image != null && recipe.image != undefined) {
                     newRecipeImage.setAttribute('src', recipe.image);
                     newRecipeImage.setAttribute('alt', 'Image not found');
-                	newRecipeImage.setAttribute('onerror', 'this.src="images/bbq-pork-ribs.jpg"');
+                    newRecipeImage.setAttribute('onerror', 'this.src="images/bbq-pork-ribs.jpg"');
                 } else {
                     newRecipeImage.setAttribute('src', 'images/bbq-pork-ribs.jpg');
                     newRecipeImage.setAttribute('alt', 'images/bbq-pork-ribs');

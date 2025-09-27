@@ -6,7 +6,7 @@
       <meta charset="utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Treats By Sherice</title>
+      <title>SJK Recipes</title>
       <!-- Favicon
          ============ -->
       <link rel="apple-touch-icon" sizes="57x57" href="images/favicon/apple-icon-57x57.png" />
@@ -31,6 +31,17 @@
       <link rel="stylesheet" type="text/css" href="css/styles.css" />
       <!-- Modernizr file
          =================== -->
+      <script type="text/javascript" src="./api/lib/axios/dist/axios.standalone.js"></script>
+      <script type="text/javascript" src="./api/lib/CryptoJS/rollups/crypto-js.js"></script>
+      <script type="text/javascript" src="./api/lib/CryptoJS/rollups/sha256.js"></script>
+      <script type="text/javascript" src="./api/lib/CryptoJS/components/hmac.js"></script>
+      <script type="text/javascript" src="./api/lib/CryptoJS/components/enc-base64.js"></script>
+      <script type="text/javascript" src="./api/lib/url-template/url-template.js"></script>
+      <script type="text/javascript" src="./api/lib/apiGatewayCore/sigV4Client.js"></script>
+      <script type="text/javascript" src="./api/lib/apiGatewayCore/apiGatewayClient.js"></script>
+      <script type="text/javascript" src="./api/lib/apiGatewayCore/simpleHttpClient.js"></script>
+      <script type="text/javascript" src="./api/lib/apiGatewayCore/utils.js"></script>
+      <script type="text/javascript" src="./api/apigClient.js"></script>
       <script charset="utf-8" type="text/javascript "src="js/modernizr.custom.js"></script>
       <script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.6.0/stitch.js"></script>
       <script src="./js/login.js"></script>
@@ -41,11 +52,11 @@
          }
       </script>
       <style type="text/css" media="print">
-          .NonPrintable
-          {
-            display: none;
-          }
-        </style>
+         .NonPrintable
+         {
+         display: none;
+         }
+      </style>
    </head>
    <body>
       <!-- Splash Screen
@@ -58,7 +69,7 @@
             <div class="container text-center wow pulse">
                <img src="images/logo-white.svg" alt="logo" />
                <br />
-               <h1>Treats By Sherice</h1>
+               <h1>SJK Recipes</h1>
             </div>
          </a>
       </section>
@@ -114,7 +125,7 @@
                            <div class="col-6">Servings</div>
                            <div class="col-1" id="recipeServings">5</div>
                            <div class="col-2">
-                              <select id="servingsMultiple" class="form-control" style="width: 50px;" onchange="onServingsSelect()">
+                              <select id="servingsMultiple" class="form-control" style="width: 70px;" onchange="onServingsSelect()">
                                  <option value="1">1x</option>
                                  <option value="2">2x</option>
                                  <option value="3">3x</option>
@@ -162,23 +173,17 @@
                   </div>
                </div>
             </div>
-
-
-
             <div class="row wow slideInUp NonPrintable">
                <div class="col-12">
                   <div class="recipe-comments">
                      <h3>Comments</h3>
-
                      <div class="col-12">
                         <ul class="recipe-comments" list-style="square", id="recipeCommentsList">
-                        
                         </ul>
                      </div>
                   </div>
                </div>
             </div>
-
             <div class="row wow slideInUp NonPrintable">
                <div class="col-12">
                   <div class="recipe-comments">
@@ -186,44 +191,30 @@
                      </br>
                      <div class="col-12">
                         <form action="#" method="post">
-                         <div class="row">
-                            <div class="col-2">
-                               Name:
-                            </div>
-                            <div class="col-10">
-                               <input type="text" align="center" size="40" id="newCommentName" placeholder="Charles Edward Cheese">
-                            </div>
-                         </div>
-                         </br>
-                         <div class="row">
-                            <div class="col-2"> Comment: </div>
-                            <div class="col-10">
-                               <textarea id="newCommentText" placeholder="Write your comment here" style="width:90%" name="comment"></textarea>
-                            </div>
-                         </div>
-                         
-                            
-                            <div>'
-                                 <button type="button" class="btn btn-default" style="width:100px;background:#a44c9f;color:#f9f9f9;display:block" onclick="insertComment()">Submit</button>
-                            </div>
+                           <div class="row">
+                              <div class="col-2">
+                                 Name:
+                              </div>
+                              <div class="col-10">
+                                 <input type="text" align="center" size="40" id="newCommentName" placeholder="Charles Edward Cheese">
+                              </div>
+                           </div>
+                           </br>
+                           <div class="row">
+                              <div class="col-2"> Comment: </div>
+                              <div class="col-10">
+                                 <textarea id="newCommentText" placeholder="Write your comment here" style="width:90%" name="comment"></textarea>
+                              </div>
+                           </div>
+                           <div>
+                              <button type="button" class="btn btn-default" style="width:200px;background:#a44c9f;color:#f9f9f9" onclick="insertComment()">Submit Comment</button>
+                           </div>
+                        </form>
                         </form>
                      </div>
-
                      <ol id="recipeComments">
                      </ol>
                   </div>
-               </div>
-            </div>
-
-
-            <!-- Back to recipes -->
-            <div class="row wow rollIn NonPrintable">
-               <div class="col-12 text-center">
-                  <a href="index.html">
-                     comments
-                  <i class="fa fa-backward" aria-hidden="true"></i>
-                  Go to back to recipes.
-                  </a>
                </div>
             </div>
          </div>
