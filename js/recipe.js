@@ -118,36 +118,19 @@ function insertComment() {
     const urlParams = new URLSearchParams(window.location.search);
     const idParam = urlParams.get('id');
 
-    const appID = "recipebook-dmxhi"
-    const stitchClient = stitch.Stitch.getAppClient(appID)
-
-    const filterDoc = {
-        _id: new stitch.BSON.ObjectId(idParam)
-    };
-
-    newCommentName = document.getElementById("newCommentName")
-    newCommentText = document.getElementById("newCommentText")
-
-    if (newCommentText && newCommentName) {
-        loginAnon(function(recipesColl, isAdmin) {
-            recipesColl.updateOne(filterDoc, {
-                $push: {
-                    comments: {
-                        user_id: stitchClient.auth.user.id,
-                        name: newCommentName.value,
-                        comment: newCommentText.value,
-                        date: new Date(),
-                    }
-                }
-            }).then(result => {
-                alert("inserted comment!")
-                onServingsSelect()
-            }).catch(err => {
-                console.log(err)
-                alert("error inserting comment")
-            })
-        })
+    var apigClient = apigClientFactory.newClient();
+    var newComment = {
+        author: document.getElementById("newCommentName").value, 
+        comment: document.getElementById("newCommentText").value
     }
+
+    apigClient.recipesRecipeIdCommentsPost({recipe_id: idParam}, newComment, {}).then(result => {
+        alert("inserted comment!")
+        console.log("added comment")
+    }).catch(err => {
+        console.log(err)
+        alert("error inserting comment")
+    })
 }
 
 function onServingsSelect() {
