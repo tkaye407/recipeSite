@@ -8,17 +8,10 @@ function getRecipe() {
     }
 
     var recipesList = document.getElementById("recipesList")
-    const filterDoc = {
-        _id: new stitch.BSON.ObjectId(idParam)
-    };
     var apigClient = apigClientFactory.newClient();
-    console.log("HI THERE 2")
-    console.log(idParam)
     apigClient.recipesRecipeIdGet({
         recipe_id: idParam
     }, {}).then(result => {
-        console.log("AWS RESULT")
-        console.log(result)
         var recipe = result.data;
 
         var recipeAuthor = document.getElementById("recipeAuthor")
