@@ -93,7 +93,6 @@ function getRecipe() {
             var commentDate = document.createElement("SPAN")
             var commentText = document.createElement("P")
 
-            console.log(comment)
             commentDiv.setAttribute("class", "info")
             commentUser.innerText = comment.name
             commentText.innerText = comment.comment
@@ -121,8 +120,6 @@ function insertComment() {
 
     const appID = "recipebook-dmxhi"
     const stitchClient = stitch.Stitch.getAppClient(appID)
-
-    console.log(stitchClient.auth.user.id)
 
     const filterDoc = {
         _id: new stitch.BSON.ObjectId(idParam)
