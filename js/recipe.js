@@ -86,27 +86,29 @@ function getRecipe() {
         }
 
         var recipeCommentsList = document.getElementById("recipeCommentsList")
-        for (const comment of recipe.comments) {
-            var commentLI = document.createElement("LI")
-            var commentDiv = document.createElement("DIV")
-            var commentUser = document.createElement("H5")
-            var commentDate = document.createElement("SPAN")
-            var commentText = document.createElement("P")
+        if (recipe.comments !== undefined) {
+            for (const comment of recipe.comments) {
+                var commentLI = document.createElement("LI")
+                var commentDiv = document.createElement("DIV")
+                var commentUser = document.createElement("H5")
+                var commentDate = document.createElement("SPAN")
+                var commentText = document.createElement("P")
 
-            commentDiv.setAttribute("class", "info")
-            commentUser.innerText = comment.name
-            commentText.innerText = comment.comment
+                commentDiv.setAttribute("class", "info")
+                commentUser.innerText = comment.name
+                commentText.innerText = comment.comment
 
-            commentDate.setAttribute("style", "float:right")
-            commentDate.innerText = `${(new Date(comment.date)).toLocaleString('default', { month: 'long', year: 'numeric'})}`
+                commentDate.setAttribute("style", "float:right")
+                commentDate.innerText = `${(new Date(comment.date)).toLocaleString('default', { month: 'long', year: 'numeric'})}`
 
-            commentDiv.appendChild(commentUser)
-            commentDiv.appendChild(commentDate)
+                commentDiv.appendChild(commentUser)
+                commentDiv.appendChild(commentDate)
 
-            commentLI.appendChild(commentDiv)
-            commentLI.appendChild(commentText)
+                commentLI.appendChild(commentDiv)
+                commentLI.appendChild(commentText)
 
-            recipeCommentsList.appendChild(commentLI)
+                recipeCommentsList.appendChild(commentLI)
+            }
         }
     }).catch(err => {
         console.log("AWS ERROR")

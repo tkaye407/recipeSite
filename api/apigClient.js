@@ -137,6 +137,24 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.recipesRecipeIdPatch = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['recipe_id', 'body'], ['body']);
+        
+        var recipesRecipeIdPatchRequest = {
+            verb: 'patch'.toUpperCase(),
+            path: pathComponent + uritemplate('/recipes/{recipe_id}').expand(apiGateway.core.utils.parseParametersToObject(params, ['recipe_id', ])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(recipesRecipeIdPatchRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.recipesRecipeIdCommentsPost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -153,6 +171,8 @@ apigClientFactory.newClient = function (config) {
         
         return apiGatewayClient.makeRequest(recipesRecipeIdCommentsPostRequest, authType, additionalParams, config.apiKey);
     };
+
+
     
 
     return apigClient;

@@ -6,74 +6,72 @@ function loadInsertOrReplace() {
         return
     }
 
-    const filterDoc = {
-        _id: new stitch.BSON.ObjectId(idParam)
-    };
-
     const baseImageName = "https://sjkrecipesite.s3.amazonaws.com/"
 
-    loginAnon(function(recipesColl, isAdmin) {
-        recipesColl.findOne(filterDoc).then(recipe => {
-            console.log(recipe)
 
-            var name = document.getElementById("name")
-            name.value = recipe.title
+    var apigClient = apigClientFactory.newClient();
+    apigClient.recipesRecipeIdGet({
+        recipe_id: idParam
+    }, {}).then(result => {
+        var recipe = result.data;
+        console.log("Boo")
+        console.log(recipe)
 
-            var servings = document.getElementById("servings")
-            servings.selectedIndex = recipe.servings - 1
+        var name = document.getElementById("name")
+        name.value = recipe.title
 
-            var rating = document.getElementById("rating")
-            rating.selectedIndex = recipe.rating - 1
+        var servings = document.getElementById("servings")
+        servings.selectedIndex = recipe.servings - 1
 
-            var difficulty = document.getElementById("difficulty")
-            difficulty.selectedIndex = recipe.difficulty - 1
+        var rating = document.getElementById("rating")
+        rating.selectedIndex = recipe.rating - 1
 
-            var timeReq = document.getElementById("timeReq")
-            timeReq.value = recipe.time
+        var difficulty = document.getElementById("difficulty")
+        difficulty.selectedIndex = recipe.difficulty - 1
 
-            var timeUnit = document.getElementById("timeUnit")
-            if (recipe.timeUnit === "hours") {
-                timeUnit.selectedIndex = 1
+        var timeReq = document.getElementById("timeReq")
+        timeReq.value = recipe.time
+
+        var timeUnit = document.getElementById("timeUnit")
+        if (recipe.timeUnit === "hours") {
+            timeUnit.selectedIndex = 1
+        }
+
+        for (tag of recipe.tags) {
+            var elem = document.getElementById(`is${tag.charAt(0).toUpperCase()}${tag.slice(1)}`)
+            if (elem) {
+                elem.checked = true
             }
+        }
 
-            for (tag of recipe.tags) {
-                var elem = document.getElementById(`is${tag.charAt(0).toUpperCase()}${tag.slice(1)}`)
-                if (elem) {
-                    elem.checked = true
-                }
+        var imageName = document.getElementById("image")
+        if (recipe.image.indexOf(baseImageName) === 0) {
+            imageName.value = recipe.image.slice(baseImageName.length)
+        }
+
+        // Create all ingredient fields 
+        var index = 0
+        for (var ingredient of recipe.ingredients) {
+            if (index > 0) {
+                insertIngredient()
             }
+            index += 1
 
-            var imageName = document.getElementById("image")
-            if (recipe.image.indexOf(baseImageName) === 0) {
-                imageName.value = recipe.image.slice(baseImageName.length)
+            document.getElementById(`ingredient${index}`).value = ingredient.name
+            document.getElementById(`ingredientQuantity${index}`).value = ingredient.quantity
+            document.getElementById(`ingredientUnit${index}`).value = ingredient.metric
+        }
+
+        // Create all instruction fields 
+        index = 0
+        for (var instruction of recipe.instructions) {
+            if (index > 0) {
+                insertInstruction()
             }
+            index += 1
 
-            // Create all ingredient fields 
-            var index = 0
-            for (var ingredient of recipe.ingredients) {
-                if (index > 0) {
-                    insertIngredient()
-                }
-                index += 1
-
-                document.getElementById(`ingredient${index}`).value = ingredient.name
-                document.getElementById(`ingredientQuantity${index}`).value = ingredient.quantity
-                document.getElementById(`ingredientUnit${index}`).value = ingredient.metric
-            }
-
-            // Create all instruction fields 
-            index = 0
-            for (var instruction of recipe.instructions) {
-                if (index > 0) {
-                    insertInstruction()
-                }
-                index += 1
-
-                document.getElementById(`instruction${index}`).value = instruction
-            }
-        }).catch(err => {
-            console.log("Error getting recipes: ", err)
-        })
+            document.getElementById(`instruction${index}`).value = instruction
+        }
     })
 }
 
@@ -157,31 +155,23 @@ function insertOrReplaceRecipe() {
     const urlParams = new URLSearchParams(window.location.search);
     const idParam = urlParams.get('id');
 
+    var apigClient = apigClientFactory.newClient();
+
     if (!idParam) {
-        loginAnon(function(recipesColl) {
-            recipesColl.insertOne(newRecipe).then(result => {
-                alert("Successfully inserted new recipe: ", result)
-                window.location.href = './insert.html'
-            }).catch(err => {
-                alert("Error inserting new recipe: ", err)
-            })
+        apigClient.recipesPost({}, newRecipe, {}).then(result => {
+            alert("inserted recipe!")
+            console.log("added recipe")
+        }).catch(err => {
+            console.log(err)
+            alert("error inserting recipe")
         })
     } else {
-        const filterDoc = {
-            _id: new stitch.BSON.ObjectId(idParam)
-        };
-
-        loginAnon(function(recipesColl) {
-            recipesColl.updateOne(filterDoc, {
-                $set: newRecipe
-            }, {
-                upsert: true
-            }).then(result => {
-                alert("Successfully replaced new recipe: ", result)
-                window.location.href = `./recipe.html?id=${idParam}`
-            }).catch(err => {
-                alert("Error inserting new recipe: ", err)
-            })
+        apigClient.recipesRecipeIdPatch({recipe_id: idParam}, newRecipe, {}).then(result => {
+            alert("updated recipe!")
+            console.log("updqted recipe")
+        }).catch(err => {
+            console.log(err)
+            alert("error updating recipe")
         })
     }
 }
@@ -189,19 +179,6 @@ function insertOrReplaceRecipe() {
 function insertIngredient() {
     var ingredientAddButton = document.getElementById("ingredientAddButton")
     var ingredientList = document.getElementById("ingredientList")
-
-    // <div class="form-group">
-    //    <label class="control-label col-sm-2"></label>
-    //    <div class="col-sm-2">          
-    //       <input type="number" class="form-control" id="ingredientQuantity2" placeholder="">
-    //    </div>
-    //    <div class="col-sm-2">    
-    //       <input type="text" class="form-control" id="ingredientUnit2" placeholder="">    
-    //    </div>
-    //    <div class="col-sm-4">    
-    //       <input type="text" class="form-control" id="ingredient2" placeholder="">    
-    //    </div>
-    // </div>
 
     var newTopDiv = document.createElement("DIV")
     newTopDiv.setAttribute("class", "form-group")
@@ -233,7 +210,6 @@ function insertIngredient() {
 
     unitDiv.appendChild(unitInput)
 
-
     // Name Input
     var nameDiv = document.createElement("DIV")
     nameDiv.setAttribute("class", "col-sm-4")
@@ -244,7 +220,6 @@ function insertIngredient() {
     nameInput.setAttribute("id", `ingredient${ingredientList.childElementCount}`)
 
     nameDiv.appendChild(nameInput)
-
 
     // Build up 
     newTopDiv.appendChild(newEmptyLabel)
@@ -257,15 +232,6 @@ function insertIngredient() {
 function insertInstruction() {
     var instructionAddButton = document.getElementById("instructionAddButton")
     var instructionList = document.getElementById("instructionList")
-
-    // <div id="instructionsList">
-    //   <div class="form-group">
-    //      <label class="control-label col-sm-2">Instructions:</label>
-    //      <div class="col-sm-8">          
-    //         <input type="text" class="form-control" id="instruction1" placeholder="Mince the garlic and put it in the pot with olive oil">
-    //      </div>
-    //   </div>
-    // </div>
 
     var newTopDiv = document.createElement("DIV")
     newTopDiv.setAttribute("class", "form-group")
