@@ -14,8 +14,7 @@ function loadInsertOrReplace() {
         recipe_id: idParam
     }, {}).then(result => {
         var recipe = result.data;
-        console.log("Boo")
-        console.log(recipe)
+        console.log("Inserting New Recipe: ", recipe)
 
         var name = document.getElementById("name")
         name.value = recipe.title
